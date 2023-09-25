@@ -13,8 +13,7 @@
 
     <div class="side main">
       <h1>Radius Space</h1>
-
-
+      <input type="number" placeholder="Room ID" class="roomId" maxlength="6" />
       <div class="play">
         <button class="playButton" @click="getServers()">
           Play Game
@@ -38,30 +37,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 const url = "https://agario.ahmetcanisik5458675.workers.dev/"
+const servers: any = []
 
-export default {
-  name: "App",
-  data() {
-    return {
-      servers: []
-    }
-  },
+onMounted(() => {
+  getServers();
+})
 
-  mounted() {
-    this.getServers();
-  },
-  methods: {
-    async getServers() {
-      await fetch(url + 'servers')
-        .then(res => res.json())
-        .then(data => {
-          const roomsArray = JSON.parse(data.rooms)
-          this.servers = roomsArray
-        })
-    }
-  }
+const getServers = async () => {
+  await fetch(url + 'servers')
+    .then(res => res.json())
+    .then(data => {
+      const roomsArray = JSON.parse(data.rooms)
+      servers.value = roomsArray
+    });
+}
+
+const storeServers = () => {
+  const serversData = servers.value
+  console.log(serversData)
 }
 </script>
 
@@ -77,6 +72,16 @@ body {
   overflow: hidden;
 }
 
+.roomId {
+  width: 18%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #333;
+  outline: none;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: border-color 0.2s ease-in-out;
+}
 
 .container {
   text-align: center;
