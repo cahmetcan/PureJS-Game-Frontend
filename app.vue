@@ -3,46 +3,50 @@
     <div class="side left">
       <div>
         <h2>Servers</h2>
-        <ul>
-          <li v-for="server in servers" :key="server.id" style="color:black;">
-            {{ server.name }}
-          </li>
-        </ul>
+        <div v-for="server in servers" :key="server.id">
+          <h2>{{ server.name }}</h2>
+          <p>{{ server.description }}</p>
+        </div>
       </div>
     </div>
 
     <div class="side main">
       <h1>Radius Space</h1>
-      <input type="number" placeholder="Room ID" class="roomId" maxlength="6" />
+      <input type="number" placeholder="Room ID" class="roomId" maxlength="6" v-model="roomId" />
       <div class="play">
-        <button class="playButton" @click="getServers()">
+        <button class="playButton" @click="showModal = true">
           Play Game
         </button>
       </div>
-      <!-- 
-    Servers list
-    servers' rooms are listed here
-   -->
-
     </div>
 
     <div class="right side">
       <div class="login">
-        <input type="text" placeholder="Nickname" class="nickname" />
-        <input type="color" class="color" />
+        <input type="text" placeholder="Nickname" v-model="nickname" />
+        <input type="color" v-model="color" class="color" />
       </div>
 
     </div>
-
+    <PlayGame v-if="showModal" :room-id="roomId.toString()" :nickname="nickname" :color="color" />
   </div>
 </template>
 
 <script setup lang="ts">
+import PlayGame from './components/PlayGame.vue';
+
+const showModal = ref(false)
 const url = "https://agario.ahmetcanisik5458675.workers.dev/"
-const servers: any = []
+const servers = ref<any[]>([])
+const roomId = ref()
+const nickname = ref('')
+let local = ref('BE')
+const randomColorFinder = "#" + Math.floor(Math.random() * 16777215).toString(16);
+const color = ref(randomColorFinder)
+
 
 onMounted(() => {
-  getServers();
+  getServers(),
+    showModal.value = false
 })
 
 const getServers = async () => {
@@ -51,13 +55,12 @@ const getServers = async () => {
     .then(data => {
       const roomsArray = JSON.parse(data.rooms)
       servers.value = roomsArray
+      local = data.userData
+
     });
 }
 
-const storeServers = () => {
-  const serversData = servers.value
-  console.log(serversData)
-}
+
 </script>
 
 <style>
@@ -73,7 +76,8 @@ body {
 }
 
 .roomId {
-  width: 18%;
+  width: 24%;
+  text-align: center;
   padding: 10px;
   border-radius: 5px;
   border: 2px solid #333;
