@@ -14,7 +14,7 @@
       <h1>Radius Space</h1>
       <input type="number" placeholder="Room ID" class="roomId" maxlength="6" v-model="roomId" />
       <div class="play">
-        <button class="playButton" @click="showModal = true">
+        <button class="playButton" @click="showModal = true" :disabled="!roomId || !nickname">
           Play Game
         </button>
       </div>
@@ -22,24 +22,23 @@
 
     <div class="right side">
       <div class="login">
-        <input type="text" placeholder="Nickname" v-model="nickname" />
+        <input type="text" placeholder="Nickname" v-model="nickname" class="roomId" style="width: 150px;" />
         <input type="color" v-model="color" class="color" />
       </div>
 
     </div>
-    <PlayGame v-if="showModal" :room-id="roomId.toString()" :nickname="nickname" :color="color" />
+    <PlayGame v-if="showModal" :local="local" :room-id="roomId.toString()" :nickname="nickname" :color="color" />
   </div>
 </template>
 
 <script setup lang="ts">
-import PlayGame from './components/PlayGame.vue';
 
 const showModal = ref(false)
 const url = "https://agario.ahmetcanisik5458675.workers.dev/"
 const servers = ref<any[]>([])
+let local = ref('BE')
 const roomId = ref()
 const nickname = ref('')
-let local = ref('BE')
 const randomColorFinder = "#" + Math.floor(Math.random() * 16777215).toString(16);
 const color = ref(randomColorFinder)
 
@@ -56,7 +55,6 @@ const getServers = async () => {
       const roomsArray = JSON.parse(data.rooms)
       servers.value = roomsArray
       local = data.userData
-
     });
 }
 
@@ -147,7 +145,7 @@ body {
   }
 }
 
-/* Oyun Butonu Stili */
+
 .playButton {
   background-color: #4CAF50;
   color: white;

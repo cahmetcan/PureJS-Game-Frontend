@@ -5,24 +5,36 @@
             <h6>Ready to Play!</h6>
             <p>You are about to join the game. Are you ready?</p>
             <p>Server: {{ local }}</p>
+            <img :src="'https://flagsapi.com/' + local + '/flat/64.png'" alt="" />
             <p>Room ID: {{ roomId }}</p>
             <p>Nickname: {{ nickname }}</p>
             <div class="color" :style="{ backgroundColor: color }"></div>
-            <button>Play!</button>
+            <button class="startButton">
+                <NuxtLink to="/play">Play</NuxtLink>
+            </button>
         </div>
     </div>
 </template>
   
-<script>
-
-export default {
-    props: {
-        roomId: String,
-        nickname: String,
-        color: String,
-        local: String
+<script setup>
+const props = defineProps({
+    roomId: {
+        type: String,
+        required: true
+    },
+    nickname: {
+        type: String,
+        required: true
+    },
+    color: {
+        type: String,
+        required: true
+    },
+    local: {
+        type: String,
+        required: true
     }
-};
+})
 </script>
 
 <style scoped>
@@ -40,7 +52,7 @@ export default {
 .modal {
     text-align: center;
     background-color: white;
-    height: 400px;
+    height: 450px;
     width: 500px;
     margin-top: 10%;
     padding: 60px 0;
@@ -60,12 +72,22 @@ p {
     color: #000000;
 }
 
-button {
-    background-color: #141414;
-    width: 150px;
-    height: 40px;
+.startButton {
+    background-color: #c0f8ff;
     color: white;
-    font-size: 14px;
-    margin-top: 50px;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #000000;
+    transition: transform 0.2s ease-in-out;
+}
+
+.startButton:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
 }
 </style>
