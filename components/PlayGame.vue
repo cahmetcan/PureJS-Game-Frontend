@@ -10,7 +10,9 @@
             <p>Nickname: {{ nickname }}</p>
             <div class="color" :style="{ backgroundColor: color }"></div>
             <button class="startButton">
-                <NuxtLink to="/play">Play</NuxtLink>
+                <nuxt-link :to="'/play?roomId=' + roomId + '&nickname=' + nickname + '&color=' + color.slice(1)">
+                    Play
+                </nuxt-link>
             </button>
         </div>
     </div>
@@ -52,7 +54,7 @@ const props = defineProps({
 .modal {
     text-align: center;
     background-color: white;
-    height: 450px;
+    height: 500px;
     width: 500px;
     margin-top: 10%;
     padding: 60px 0;

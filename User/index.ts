@@ -20,8 +20,21 @@ class User {
     this.color = color;
     this.name = name;
   }
+  /* 
+    ctx.beginPath();
+  var x = 400
+  var y = 100
+  // x , y , radius , start angle , end angle
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.stroke();
+
+  */
 
   public locate(x: number, y: number, ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.stroke();
+
     this.x = x;
     this.y = y;
 
@@ -29,10 +42,13 @@ class User {
   }
 
   private draw(ctx: CanvasRenderingContext2D) {
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText(this.name, this.x - 10, this.y - 10);
+    
     ctx.beginPath();
-    var x = 100;
-    var y = 100;
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = this.color;
+    ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
     ctx.stroke();
   }
 }
