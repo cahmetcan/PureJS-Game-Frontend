@@ -12,7 +12,7 @@
 
     <div class="side main">
       <h1>Radius Space</h1>
-      <input type="number" placeholder="Room ID" class="roomId" maxlength="6" v-model="roomId" />
+      <input type="number" placeholder="Room ID" class="roomId" maxlength="6" minlength="6" v-model="roomId" />
       <div class="play">
         <button class="playButton" @click="showModal = true" :disabled="!roomId || !nickname">
           Play Game

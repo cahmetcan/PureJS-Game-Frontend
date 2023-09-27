@@ -3,21 +3,19 @@
 </template>
 
 <script setup lang="ts">
+import User from '../User'
 
 onMounted(() => {
-    // const socket = io('https://agario.ahmetcanisik5458675.workers.dev/')
+    const url = "wss://agario.ahmetcanisik5458675.workers.dev"
+    const ws = new WebSocket(url)
+
     const c = document.getElementById('pg') as HTMLCanvasElement
     const ctx = c.getContext('2d') as CanvasRenderingContext2D
     c.style.border = "2px solid #000";
+    c.style.backgroundColor = "#fff";
 
-
-    ctx.beginPath();
-    var x = 100
-    var y = 100
-    // x , y , radius , start angle , end angle
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.stroke();
-
+    const user = new User('1', 100, 100, 5, '#000', 'ahmetcan')
+    user.locate(100, 100, ctx)
 })
 
 
