@@ -20,15 +20,6 @@ class User {
     this.color = color;
     this.name = name;
   }
-  /* 
-    ctx.beginPath();
-  var x = 400
-  var y = 100
-  // x , y , radius , start angle , end angle
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.stroke();
-
-  */
 
   public locate(x: number, y: number, ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
@@ -42,14 +33,23 @@ class User {
   }
 
   private draw(ctx: CanvasRenderingContext2D) {
-    ctx.font = "12px Arial";
-    ctx.fillStyle = "black";
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#" + this.color;
     ctx.fillText(this.name, this.x - 10, this.y - 10);
-    
+
     ctx.beginPath();
-    ctx.fillStyle = this.color;
     ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = "#" + this.color;
     ctx.stroke();
+  }
+
+  public removeUser(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    ctx.clearRect(x - 10, y - 10, 100, 100);
+  }
+
+  public update(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    this.removeUser(ctx, x, y);
+    this.locate(x, y, ctx);
   }
 }
 
