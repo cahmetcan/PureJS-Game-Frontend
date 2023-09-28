@@ -1,7 +1,7 @@
 <template>
     <div class="modal-overlay">
         <div class="modal">
-            <img class="check" src="~/assets/check-icon.png" alt="" />
+            <img class="check" alt="" />
             <h6>Ready to Play!</h6>
             <p>You are about to join the game. Are you ready?</p>
             <p>Server: {{ local }}</p>
